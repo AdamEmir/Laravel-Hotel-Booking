@@ -14,7 +14,9 @@ class BookingController extends Controller
      */
     public function index()
     {
-        //
+        $bookings = Booking::latest()->paginate(5);
+        
+        return view('bookings.index', compact('bookings'))->with(request()->input('page'));
     }
 
     /**
@@ -24,7 +26,7 @@ class BookingController extends Controller
      */
     public function create()
     {
-        return view('booking.create');
+        return view('bookings.create');
     }
 
     /**
@@ -37,7 +39,7 @@ class BookingController extends Controller
     {
         //valide the input
         $request->validate([
-            'full_name' => 'required', 
+            'guest_name' => 'required', 
             'email' => 'required', 
             'phone_number' => 'required', 
             'check_in' => 'required', 
@@ -45,19 +47,21 @@ class BookingController extends Controller
             'guest_number' => 'required',
             'room_type' => 'required', 
             'smoking_preferences' => 'required', 
-            'breakfast_buffet' => 'required', 
-            'dinner_buffet' => 'required',
+            'breakfast_buffet' => 'nullable|in:yes,no', 
+            'dinner_buffet' => 'nullable|in:yes,no',
             'remarks_questions' => 'required', 
             'damage_remarks' => 'required', 
-            'total_fine' => 'required', 
+            'total_fine' => 'required',
+            'employee_name'=> 'required', 
             'employee_id' => 'required'
+            
         ]);
 
         //create a new product
         Booking::create($request->all());
 
         //redirect the use and send friendly message
-        return redirect()->route('booking.create')-with('success','Booking created successfully');
+        return redirect()->route('bookings.index')->with('success','Booking created successfully');
     }
 
     /**
@@ -68,7 +72,7 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        //
+        return view('bookings.show', compact('booking'));
     }
 
     /**
@@ -79,7 +83,7 @@ class BookingController extends Controller
      */
     public function edit(Booking $booking)
     {
-        //
+        return view('bookings.edit', compact('booking'));
     }
 
     /**
@@ -91,7 +95,31 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        //
+        //validate the input
+        $request->validate([
+            'guest_name' => 'required', 
+            'email' => 'required', 
+            'phone_number' => 'required', 
+            'check_in' => 'required', 
+            'check_out' => 'required', 
+            'guest_number' => 'required',
+            'room_type' => 'required', 
+            'smoking_preferences' => 'required', 
+            'breakfast_buffet' => 'nullable|in:yes,no', 
+            'dinner_buffet' => 'nullable|in:yes,no',
+            'remarks_questions' => 'required', 
+            'damage_remarks' => 'required', 
+            'total_fine' => 'required', 
+            'employee_name'=> 'required',
+            'employee_id' => 'required'
+            
+        ]);
+
+        //create a new product
+        $booking->update($request->all());
+
+        //redirect the user and send friendly message
+        return redirect()->route('bookings.index')->with('success','Booking updated successfully');
     }
 
     /**
@@ -102,6 +130,10 @@ class BookingController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        //
+         //delete the product
+        $booking->delete();
+
+        //redirect the user and display success message
+        return redirect()->route('bookings.index')->with('success','Booking deleted successfully');
     }
 }

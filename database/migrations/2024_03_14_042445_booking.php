@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('booking', function (Blueprint $table) {
+        Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->string('full_name');
+            $table->string('guest_name');
             $table->String('email');
             $table->String('phone_number');
             $table->date('check_in');
@@ -23,12 +23,13 @@ return new class extends Migration
             $table->integer('guest_number');
             $table->String('room_type');
             $table->boolean('smoking_preferences');
-            $table->boolean('breakfast_buffet');
-            $table->boolean('dinner_buffet');
+            $table->enum('breakfast_buffet', ['yes', 'no'])->default('no');
+            $table->enum('dinner_buffet', ['yes', 'no'])->default('no');
             $table->text('remarks_questions');
             $table->text('damage_remarks');
             $table->double('total_fine', 8, 2);
             $table->string('employee_id');
+            $table->String('employee_name');
             $table->timestamps();
         });
     }
@@ -40,6 +41,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('booking');
+        Schema::dropIfExists('bookings');
     }
 };
