@@ -95,6 +95,7 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
+
         //validate the input
         $request->validate([
             'guest_name' => 'required', 
@@ -115,8 +116,25 @@ class BookingController extends Controller
             
         ]);
 
-        //create a new product
-        $booking->update($request->all());
+        //update the booking attributes
+        $booking->guest_name = $request->input('guest_name');
+        $booking->email = $request->input('email');
+        $booking->phone_number = $request->input('phone_number');
+        $booking->check_in = $request->input('check_in');
+        $booking->check_out = $request->input('check_out');
+        $booking->guest_number = $request->input('guest_number');
+        $booking->room_type = $request->input('room_type');
+        $booking->smoking_preferences = $request->input('smoking_preferences');
+        $booking->breakfast_buffet = $request->input('breakfast_buffet');
+        $booking->dinner_buffet = $request->input('dinner_buffet');
+        $booking->remarks_questions = $request->input('remarks_questions');
+        $booking->damage_remarks = $request->input('damage_remarks');
+        $booking->total_fine = $request->input('total_fine');
+        $booking->employee_name = $request->input('employee_name');
+        $booking->employee_id = $request->input('employee_id');
+
+        //save the updated booking
+        $booking->save();
 
         //redirect the user and send friendly message
         return redirect()->route('bookings.index')->with('success','Booking updated successfully');

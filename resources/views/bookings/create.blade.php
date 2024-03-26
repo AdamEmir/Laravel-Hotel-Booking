@@ -9,7 +9,7 @@
             </ul>
         </div>
     @endif
-    <form action="{{ route('bookings.store') }}" method="POST">
+    <form action="/tambah" method="POST">
         @csrf
         <div class="form-group">
             <div class="row">

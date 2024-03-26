@@ -5,7 +5,8 @@
         </div>
         <div class="col-3 d-flex justify-content-center ps-4">
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('bookings.create') }}">New Booking</a>
+                <button class="btn btn-success" data-toggle="modal" data-target="#bookingCreateModal">New
+                    Booking</button>
             </div>
         </div>
     </div>
@@ -33,54 +34,26 @@
                 <td>{{ $booking->check_out }}</td>
                 <td class="d-flex justify-content-center">
                     <form action="{{ route('bookings.destroy', $booking->id) }}" method="POST">
-                        <a class="btn btn-info" data-idUpdate="'.$booking->id.'" data-toggle="modal"
-                            data-target="#bookingModal">Show</a>
-                        <a class="btn btn-primary" href="{{ route('bookings.edit', $booking->id) }}">Edit</a>
+                        <a class="btn btn-info" data-toggle="modal"
+                            data-target="#bookingModal{{ $booking->id }}">Show</a>
+                        <a class="btn btn-primary" data-toggle="modal"
+                            data-target="#bookingEditModal{{ $booking->id }}">Edit</a>
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </td>
             </tr>
+
+            @include('bookings.modal.show_booking')
+            @include('bookings.modal.edit_booking')
         @endforeach
     </table>
 
     {{ $bookings->links() }}
 
-    <!-- Start Modal -->
-    <div class="modal fade" id="bookingModal" tabindex="-1" role="dialog" aria-labelledby="bookingModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="bookingModalLabel">Booking Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <div class="form-group">
-                                <strong>Guest Name:</strong>
-                                {{ $booking->guest_name }}
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <div class="form-group">
-                                <strong>Details:</strong>
-                                {{ $booking->employee_id }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- End Modal --}}
+    @include('bookings.modal.add_booking')
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {

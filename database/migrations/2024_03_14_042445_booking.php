@@ -22,11 +22,11 @@ return new class extends Migration
             $table->date('check_out');
             $table->integer('guest_number');
             $table->String('room_type');
-            $table->boolean('smoking_preferences');
+            $table->enum('smoking_preferences', ['yes', 'no'])->default('no');
             $table->enum('breakfast_buffet', ['yes', 'no'])->default('no');
             $table->enum('dinner_buffet', ['yes', 'no'])->default('no');
-            $table->text('remarks_questions');
-            $table->text('damage_remarks');
+            $table->string('remarks_questions');
+            $table->string('damage_remarks');
             $table->double('total_fine', 8, 2);
             $table->string('employee_id');
             $table->String('employee_name');

@@ -9,7 +9,7 @@
             </ul>
         </div>
     @endif
-    <form action="{{ route('bookings.update', $booking->id) }}" method="POST">
+    <form action="/edit-booking/{booking}" method="POST">
         @csrf
         @method('PUT')
         <div class="form-group">
