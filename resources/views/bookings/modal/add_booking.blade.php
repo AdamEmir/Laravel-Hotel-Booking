@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/simpanan" method="POST">
+                <form action="/tambah" method="POST">
                     @csrf
                     <div class="form-group">
 
