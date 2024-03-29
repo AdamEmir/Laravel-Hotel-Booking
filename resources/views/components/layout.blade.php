@@ -60,11 +60,15 @@
                 </li> --}}
             </ul>
             <div class="sidebar-footer">
-                <a href="#" class="sidebar-link">
+                <a href="{{ route('authentications.login') }}" class="sidebar-link"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="lni lni-exit"></i>
                     <span>Logout</span>
                 </a>
             </div>
+            <form id="logout-form" action="/logout" method="POST" style="display: none;">
+                @csrf
+            </form>
         </aside>
 
         <div class="main p-4">
