@@ -10,4 +10,9 @@ class StaffController extends Controller
     {
         return view('staff.index');
     }
+
+    public function showBooking()
+    {
+        return view('staff.booking');
+    }
 }

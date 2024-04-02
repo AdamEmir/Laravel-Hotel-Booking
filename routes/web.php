@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 //Route for login
 
 Route::controller(LoginController::class)->as('authentications.')->group(function(){
-    Route::get('/logmasuk', [LoginController::class, 'show'])->name('login');
+    Route::get('/', [LoginController::class, 'show'])->name('login');
     Route::post('/login', [LoginController::class, 'authenticate']);
     Route::post('/logout', [LoginController::class, 'logout']);
 });
@@ -49,25 +49,25 @@ Route::middleware(['auth', 'admin'])->as('admin.')->group(function () {
 // For Staff
 Route::middleware(['auth', 'staff'])->as('staff.')->group(function () {
     Route::get('/staff-dashboard', [StaffController::class, 'showDashboard'])->name('index');
+    Route::get('/staff-booking', [StaffController::class, 'showBooking'])->name('booking');
 
-    Route::prefix('tempah')->as('bookings.')->group(function(){
-        
-    });
+//     //Route for index CRUD
+//     Route::prefix('tempah')
+//     ->as('bookings.')
+//     ->group(function (){
+//     Route::get('/', [BookingController::class, 'index']);
+//     Route::get('/tambah', [BookingController::class, 'create'])->name('create');
+//     Route::get('/kemaskini', [BookingController::class, 'edit'])->name('edit');
+//     Route::get('/tunjuk', [BookingController::class, 'show'])->name('show');
+//     Route::get('/simpan', [BookingController::class, 'store'])->name('store');
+//     Route::get('/home', [BookingController::class, 'index'])->name('index');
+//     Route::delete('/hapus/{booking}', [BookingController::class, 'destroy'])->name('destroy');
+// });
 });
 
-//Route for index CRUD
 
-Route::prefix('tempah')
-->as('bookings.')
-->group(function (){
-    Route::get('/', [BookingController::class, 'index']);
-    Route::get('/tambah', [BookingController::class, 'create'])->name('create');
-    Route::get('/kemaskini', [BookingController::class, 'edit'])->name('edit');
-    Route::get('/tunjuk', [BookingController::class, 'show'])->name('show');
-    Route::get('/simpan', [BookingController::class, 'store'])->name('store');
-    Route::get('/home', [BookingController::class, 'index'])->name('index');
-    Route::delete('/hapus/{booking}', [BookingController::class, 'destroy'])->name('destroy');
-});
+
+
 
 // Route::resource('bookings', BookingController::class);
 
