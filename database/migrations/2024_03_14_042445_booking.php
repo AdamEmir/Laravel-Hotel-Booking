@@ -25,11 +25,11 @@ return new class extends Migration
             $table->enum('smoking_preferences', ['yes', 'no'])->default('no');
             $table->enum('breakfast_buffet', ['yes', 'no'])->default('no');
             $table->enum('dinner_buffet', ['yes', 'no'])->default('no');
-            $table->string('remarks_questions');
-            $table->string('damage_remarks');
+            $table->text('remarks_questions');
+            $table->text('damage_remarks');
             $table->double('total_fine', 8, 2);
-            $table->string('employee_id');
-            $table->String('employee_name');
+            $table->string('employee_id')->default('101');
+            $table->String('employee_name')->default("Shamsul");
             $table->timestamps();
         });
     }

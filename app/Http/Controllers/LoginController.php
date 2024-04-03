@@ -26,7 +26,7 @@ class LoginController extends Controller
         $request->session()->regenerate();
 
         if (Auth::user()->user_type == 'staff') {
-            return redirect()->route('staff.index');
+            return redirect()->route('index');
         } elseif (Auth::user()->user_type == 'admin') {
             return redirect()->route('admin.index');
         }
@@ -42,6 +42,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/logmasuk');
+        return redirect('/');
     }
 }

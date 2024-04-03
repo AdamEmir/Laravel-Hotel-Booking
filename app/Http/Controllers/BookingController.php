@@ -16,7 +16,7 @@ class BookingController extends Controller
     {
         $bookings = Booking::latest()->paginate(5);
         
-        return view('bookings.index', compact('bookings'))->with(request()->input('page'));
+        return view('staff.booking', compact('bookings'))->with(request()->input('page'));
     }
 
     /**
@@ -46,14 +46,14 @@ class BookingController extends Controller
             'check_out' => 'required', 
             'guest_number' => 'required',
             'room_type' => 'required', 
-            'smoking_preferences' => 'required', 
+            'smoking_preferences' => 'nullable', 
             'breakfast_buffet' => 'nullable|in:yes,no', 
             'dinner_buffet' => 'nullable|in:yes,no',
             'remarks_questions' => 'required', 
             'damage_remarks' => 'required', 
             'total_fine' => 'required',
-            'employee_name'=> 'required', 
-            'employee_id' => 'required'
+            'employee_name'=> 'nullable', 
+            'employee_id' => 'nullable'
             
         ]);
 
@@ -61,7 +61,7 @@ class BookingController extends Controller
         Booking::create($request->all());
 
         //redirect the use and send friendly message
-        return redirect()->route('bookings.index')->with('success','Booking created successfully');
+        return redirect()->route('booking')->with('success','Booking created successfully');
     }
 
     /**
@@ -105,14 +105,14 @@ class BookingController extends Controller
             'check_out' => 'required', 
             'guest_number' => 'required',
             'room_type' => 'required', 
-            'smoking_preferences' => 'required', 
+            'smoking_preferences' => 'nullable', 
             'breakfast_buffet' => 'nullable|in:yes,no', 
             'dinner_buffet' => 'nullable|in:yes,no',
             'remarks_questions' => 'required', 
             'damage_remarks' => 'required', 
             'total_fine' => 'required', 
-            'employee_name'=> 'required',
-            'employee_id' => 'required'
+            'employee_name'=> 'nullable',
+            'employee_id' => 'nullable'
             
         ]);
 
@@ -125,19 +125,16 @@ class BookingController extends Controller
         $booking->guest_number = $request->input('guest_number');
         $booking->room_type = $request->input('room_type');
         $booking->smoking_preferences = $request->input('smoking_preferences');
-        $booking->breakfast_buffet = $request->input('breakfast_buffet');
-        $booking->dinner_buffet = $request->input('dinner_buffet');
+        $booking->breakfast_buffet = $request->filled('breakfast_buffet') ? $request->input('breakfast_buffet') : 'no';
+        $booking->dinner_buffet = $request->filled('dinner_buffet') ? $request->input('dinner_buffet') : 'no';
         $booking->remarks_questions = $request->input('remarks_questions');
         $booking->damage_remarks = $request->input('damage_remarks');
         $booking->total_fine = $request->input('total_fine');
-        $booking->employee_name = $request->input('employee_name');
-        $booking->employee_id = $request->input('employee_id');
-
         //save the updated booking
         $booking->save();
 
         //redirect the user and send friendly message
-        return redirect()->route('bookings.index')->with('success','Booking updated successfully');
+        return redirect()->route('booking')->with('success','Booking updated successfully');
     }
 
     /**
@@ -152,6 +149,6 @@ class BookingController extends Controller
         $booking->delete();
 
         //redirect the user and display success message
-        return redirect()->route('bookings.index')->with('success','Booking deleted successfully');
+        return redirect()->route('booking')->with('success','Booking deleted successfully');
     }
 }

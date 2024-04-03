@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('user_type')->nullable();
+            $table->string('user_type')->default('staff');
             $table->timestamps();
         });
     }
